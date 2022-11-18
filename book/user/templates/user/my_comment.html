@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block right-panel-content %}
+<table class="table">
+        <thead>
+                <tr>
+                <th>Name</th>
+                <th>Content</th>
+                <th>Time</th>
+                <th>Delete</th>
+                </tr>
+        </thead>
+        <tbody>
+                {% for comment in comments %}
+                <tr>
+                        <td>{{ comment.book.title }}</td>
+                        <td>{{ comment.content }}</td>
+                        <td>{{ comment.addtime }}</td>
+                        <td><a href="{% url 'delete_comment' comment.id %}">Delete</a></td>
+                </tr>
+                {% endfor %}
+        </tbody>
+</table>
+{% endblock %}
+
