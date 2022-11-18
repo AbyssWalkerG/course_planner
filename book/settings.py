@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'book.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 ip = '127.0.0.1'
-DATABASE_NAME = 'courseplanner2'  # mysql数据库名称
+DATABASE_NAME = 'courseplanner1'  # mysql数据库名称
 DATABASE_USER = 'root'  # mysql数据库用户名
-DATABASE_PASS = 'guorui024614!'  # mysql数据库密码
+DATABASE_PASS = 'wyh123456A'  # mysql数据库密码
 DATABASE_HOST = ip  # mysql数据库IP
 DATABASE_PORT = 3306  # mysql数据库端口
 DATABASES = {
@@ -120,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 

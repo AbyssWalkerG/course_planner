@@ -3,45 +3,28 @@
     <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-md-2 column">
-                <!--img alt="140x140" src="/static/media/{{ book.pic }}" width=150px height=200px/-->
-                     <li>
-                        Rate:{{ book_rate }}
-                    </li>
-                  <li>
-                        Ratings:{{ book.rate_set.count }}
-                    </li>
-                    <li>
-                        Collections:{{ book.collect.count }} ---{% if is_collect %}
-                        <a href="{% url 'decollect' book.id %}">Cancel collection</a>{% else %}
-                        <a href="{% url 'collect' book.id %}">Click to collect</a>{% endif %}
-                    </li>
-                    <a href="{% url 'statistics' %}">Statistics</a>
-                    </li>
-
+                <img alt="140x140" src="/static/media/{{ book.pic }}" width=150px height=200px/>
             </div>
             <div class="col-md-10 column">
                 <ol class="list-unstyled">
                     <li>
-                        Course Number:{{ book.good }}
-                    </li>
-                    <li>
                         Course Name:{{ book.title }}
                     </li>
                     <li>
-                        Instructor:{{ book.author }}
+                        Professor:{{ book.author }}
                     </li>
                     <li>
                         Tag:
                         {% if book.tags %}
                             {{ book.tags }}
-                        {% endif %}
+                        {% endif %} None
                     </li>
                     <li>
                         Description:{{ book.intro }}
                     </li>
-                    <!--li>
+                    <li>
                         Rate:{{ book_rate }}
-                    </li-->
+                    </li>
                     {% if is_rate is not None %}
                         <h4>You have rated it: {{ is_rate.mark }}</h4>
                     {% else %}
@@ -61,14 +44,14 @@
                         </li>
 
                     {% endif %}
-                    <!--li>
+                    <li>
                         Number of ratings:{{ book.rate_set.count }}
                     </li>
                     <li>
                         Number of collections:{{ book.collect.count }} ---{% if is_collect %}
                         <a href="{% url 'decollect' book.id %}">Cancel collection</a>{% else %}
                         <a href="{% url 'collect' book.id %}">Click to collect</a>{% endif %}
-                    </li-->
+                    </li>
                     <li>
                         <!--div class="bdsharebuttonbox">
                             <p>分享到:</p>

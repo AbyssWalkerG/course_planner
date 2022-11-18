@@ -1,4 +1,5 @@
 from functools import wraps
+
 from django.core.paginator import Paginator
 from django.db.models import Q, Count, F
 from django.http import HttpResponse, JsonResponse
@@ -6,12 +7,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from rest_framework.renderers import JSONRenderer
 from django.views.decorators.cache import cache_page
+
 from recommend_books import recommend_by_user_id
 from .forms import *
-from pyecharts.charts import Bar
-from pyecharts.charts import Page
-
-
 
 
 def login_in(func):  # 验证用户是否登录
@@ -139,48 +137,12 @@ def book(request, book_id):
     rate = rate if rate else 0
     book_rate = round(rate, 2)
 
-    rate1 = 0
-    rate2 = 0
-    rate3 = 0
-    rate4 = 0
-    rate5 = 0
-    ratelist = []
-    totalrate = Rate.objects.filter(book=book).all()
-    for i in totalrate:
-        if i.mark == 1.0:
-            rate1 = rate1+1
-        if i.mark == 2.0:
-            rate2 = rate2+1
-        if i.mark == 3.0:
-            rate3=rate3+1
-        if i.mark == 4.0:
-            rate4=rate4+1
-        if i.mark == 5.0:
-            rate5=rate5+1
-    print(rate1)
-    print(rate2)
-    print(rate3)
-    print(rate4)
-    print(rate5)
-
     if user_id:
         user = User.objects.get(pk=user_id)
         is_collect = book.collect.filter(id=user_id).first()
         is_rate = Rate.objects.filter(book=book, user=user).first()
     rate_num = book.rate_num
     sump = book.sump
-
-    page = Page()
-    bar2 = Bar()
-    bar2.add_xaxis(["1", "2", "3", "4", "5"])
-    bar2.add_yaxis("商家B", [rate1, rate2, rate3, rate4, rate5])
-    bar2.render('test1.html')  # 可以渲染到html
-    bar1 = Bar()
-    bar1.add_xaxis(["5", "4", "3", "2", "1"])
-    bar1.add_yaxis("商家A", [5, 20, 36, 10, 75])
-    bar1.render('test1.html')  # 可以渲染到html
-    page.add(bar1,bar2)
-    page.render("/Users/guorui/Downloads/book/user/templates/user/"+"page.html")
     return render(request, "user/book.html", locals())
 
 
@@ -442,14 +404,14 @@ def like_collect(request):
     try:
         user = User.objects.get(id=request.session.get("user_id"))
     except:
-        return JsonResponse(data={'code': 2, 'msg': 'You have not logged in to the system!'})
+        return JsonResponse(data={'code': 2, 'msg': '没有登录'})
     message_board_id = request.POST.get("message_board_id")
     like_or_collect = request.POST.get("like_or_collect", None)  # 点赞还是收藏
     is_like = request.POST.get("is_like", None)  # 是否点赞
     is_collect = request.POST.get("is_collect", None)  # 是否收藏
     # print('lllll', like_or_collect, is_like, is_collect)
     if like_or_collect not in ['like', 'collect'] or None in [is_like, is_collect]:
-        return JsonResponse(data={'code': 0, 'msg': 'Wrong parameters!'})
+        return JsonResponse(data={'code': 0, 'msg': '参数有误1'})
     try:
         collectboard = CollectBoard.objects.filter(user=user, message_board_id=message_board_id)
         if not collectboard:
@@ -466,7 +428,7 @@ def like_collect(request):
                     MessageBoard.objects.filter(id=message_board_id).update(collect_num=F('collect_num') - 1)
                 else:
                     MessageBoard.objects.filter(id=message_board_id).update(collect_num=F('collect_num') + 1)
-            return JsonResponse(data={'code': 1, 'msg': 'Successful operation!'})
+            return JsonResponse(data={'code': 1, 'msg': '操作成功'})
         collectboard = collectboard.first()
         if like_or_collect == 'like':
             is_collect = collectboard.is_collect
@@ -484,10 +446,10 @@ def like_collect(request):
                 MessageBoard.objects.filter(id=message_board_id).update(collect_num=F('collect_num') - 1)
             else:
                 MessageBoard.objects.filter(id=message_board_id).update(collect_num=F('collect_num') + 1)
-        return JsonResponse(data={'code': 1, 'msg': 'Successful operation!', 'is_like': is_like, 'is_collect': is_collect})
+        return JsonResponse(data={'code': 1, 'msg': '操作成功', 'is_like': is_like, 'is_collect': is_collect})
     except Exception as e:
         print(e)
-        return JsonResponse(data={'code': 0, 'msg': 'Wrong parameters!'})
+        return JsonResponse(data={'code': 0, 'msg': '参数有误2'})
 
 
 @login_in
@@ -597,11 +559,11 @@ def begin(request):
         if result:
             if result[0].email == email:
                 result[0].password = request.POST["password"]
-                return HttpResponse("Change password successfully!")
+                return HttpResponse("修改密码成功")
             else:
-                return render(request, "user/begin.html", {"message": "The email address does not exist!"})
+                return render(request, "user/begin.html", {"message": "注册时的邮箱不对"})
         else:
-            return render(request, "user/begin.html", {"message": "The account does not exist!"})
+            return render(request, "user/begin.html", {"message": "账号不存在"})
     return render(request, "user/begin.html")
 
 
@@ -662,9 +624,6 @@ def create_book(request, ):
                 pass
 
     return redirect(reverse("login", ))
-
-def statistics(request):
-    return render(request, "user/page.html")
 
 
 # celery测试
