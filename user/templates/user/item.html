@@ -10,16 +10,13 @@
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-md-3 column">
-                    <!--img class="img-thumbnail book-image" alt="140x140" src="/static/media/{{ book.pic }}" width=140px
-                         height=140px/-->
+                    <img class="img-thumbnail book-image" alt="140x140" src="/static/media/{{ book.pic }}" width=140px
+                         height=140px/>
+                </div>
+                <div class="col-md-7 column">
                     <h3>
                         <a href="{% url 'book' book.id %}">    {{ book.title }}</a>
                     </h3>
-                </div>
-                <div class="col-md-7 column">
-                    <!--h3>
-                        <a href="{% url 'book' book.id %}">    {{ book.title }}</a>
-                    </h3-->
                     <p>{{ book.intro | slice:":100" }}......</p>
                     <p>Views:{{ book.num }}</p>
                     <p>Collections:{{ book.collect.count }}</p>
