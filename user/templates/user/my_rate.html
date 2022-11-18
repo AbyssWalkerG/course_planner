@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block right-panel-content %}
+<table class="table">
+        <thead>
+                <tr>
+                <th>Name</th>
+                <th>Rate</th>
+                <th>Time</th>
+                <th>Delete</th>
+                </tr>
+        </thead>
+        <tbody>
+                {% for i in rate %}
+                <tr>
+                        <td>{{ i.book.title }}</td>
+                        <td>{{ i.mark }}</td>
+                        <td>{{ i.create_time }}</td>
+                        <td><a href="{% url 'delete_rate' i.id %}">Confirm</a></td>
+                </tr>
+                {% endfor %}
+        </tbody>
+</table>
+{% endblock %}
+
