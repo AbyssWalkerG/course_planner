@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+        {% block right-panel-content %}
+        <div class="container-fluid">
+        <form action="{% url 'personal' %}" method='post' autocomplete="on">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field.errors }}
+                        {{ field }}
+                </div>
+                {% endfor %}
+                    <button type="reset"><span class="glyphicon glyphicon-remove"></span></button>
+                    <button type="submit"><span class="glyphicon glyphicon-ok"></span></button>   
+		    
+	<table class="table">
+		<thead>
+		<th><a href="{% url 'mycollect' %}">My Collections</a></th>
+		<th><a href="{% url 'myjoin' %}">My Activities</a></th>
+		<th><a href="{% url 'my_comments' %}">My Comments</a></th>
+		<th><a href="{% url 'my_rate' %}">My Rating</a></th>
+		</thead>
+	</table>
+	</form>
+	</div>
+        {% endblock %}
+</body>
+</html>
+

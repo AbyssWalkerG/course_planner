@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block right-panel-content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Professor</th>
+            <th>Tag</th>
+            <th>Look</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in book %}
+            <tr>
+                <td>{{ i.title }}</td>
+                <td>{{ i.author }}</td>
+                <td> {% if i.tags %}
+                    {{ i.tags }}
+                {% endif %} None
+                </td>
+                <td><a href="{% url 'book' i.id %}">Look</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

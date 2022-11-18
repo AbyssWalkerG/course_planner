@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block right-panel-content %}
+<table class="table">
+        <thead>
+                <tr>
+                <th>Activity tag</th>
+                <th>Number of people who want to take</th>
+                <th>Status</th>
+                <th>Check</th>
+                </tr>
+        </thead>
+        <tbody>
+                {% for i in action %}
+                <tr>
+                        <td>{{ i.title }}</td>
+                        <td>{{ i.user.count }}</td>
+                        <td>
+                            {% if not i.status %}
+                                Ongoing
+                                {% else %}
+                                Over
+                            {% endif %}
+                            </td>
+                        <td><a href="{% url 'actionone' i.id %}">Check</a></td>
+                </tr>
+                {% endfor %}
+        </tbody>
+</table>
+{% endblock %}
+
